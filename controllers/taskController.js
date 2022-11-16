@@ -19,6 +19,11 @@ exports.getAllTasks = async (req, res) => {
 exports.getSingleTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).json({
+        message: `NO TASK WITH THAT ID ${req.params.id}, (404)`,
+      });
+    }
     res.status(200).json({
       status: "SUCCESS",
       task: task,
@@ -65,11 +70,14 @@ exports.updateTask = async (req, res) => {
 // DELETE
 exports.deleteTask = async (req, res) => {
   try {
-    const deleteTask = await Task.findByIdAndDelete(req.params.id);
-    if (!deleteTask) {
-      return;
+    const task = await Task.findByIdAndDelete(req.params.id);
+    if (!task) {
+      return res.status(404).json({
+        message: `NO TASK WITH THAT ID ${req.params.id}, (404)`,
+      });
     }
-    res.status(204).json({
+    res.status(200).json({
+      // yes we could use 204 code
       status: "DELETED",
       data: null,
     });
