@@ -1,5 +1,6 @@
 const Task = require("./../models/taskModel");
 
+// GET ALL
 exports.getAllTasks = async (req, res) => {
   try {
     const tasks = await Task.find();
@@ -13,12 +14,23 @@ exports.getAllTasks = async (req, res) => {
     });
   }
 };
-exports.getSingleTask = (req, res) => {
-  res.status(200).json({
-    status: "SUCCESS",
-    message: "SINGLE TASK",
-  });
+
+// GET SINGLE
+exports.getSingleTask = async (req, res) => {
+  try {
+    const task = await Task.findOne(req.params.id);
+    res.status(200).json({
+      status: "SUCCESS",
+      task: task,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error,
+    });
+  }
 };
+
+// CREATE
 exports.createTask = async (req, res) => {
   try {
     const task = await Task.create(req.body);
@@ -33,12 +45,24 @@ exports.createTask = async (req, res) => {
     });
   }
 };
-exports.updateTask = (req, res) => {
-  res.status(200).json({
-    status: "SUCCESS",
-    message: "TASK UPDATED",
-  });
+
+// UPDATE
+exports.updateTask = async (req, res) => {
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id);
+    res.status(200).json({
+      status: "SUCCESS",
+      message: "TASK UPDATED",
+      updatedTask: updatedTask, // = {updatedTask}
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error,
+    });
+  }
 };
+
+// DELETE
 exports.deleteTask = async (req, res) => {
   try {
     const deleteTask = await Task.findByIdAndDelete(req.params.id);
