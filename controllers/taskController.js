@@ -58,8 +58,14 @@ exports.updateTask = async (req, res) => {
     res.status(200).json({
       status: "SUCCESS",
       message: "TASK UPDATED",
-      updatedTask: updatedTask, // = {updatedTask}
+      updatedTask: req.body,
     });
+
+    if (!task) {
+      return res.status(404).json({
+        message: `NO TASK WITH THAT ID ${req.params.id}, (404)`,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: error,
