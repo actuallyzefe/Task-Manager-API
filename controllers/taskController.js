@@ -18,7 +18,7 @@ exports.getAllTasks = async (req, res) => {
 // GET SINGLE
 exports.getSingleTask = async (req, res) => {
   try {
-    const task = await Task.findOne(req.params.id);
+    const task = await Task.findById(req.params.id);
     res.status(200).json({
       status: "SUCCESS",
       task: task,
