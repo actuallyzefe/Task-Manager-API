@@ -55,7 +55,10 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   try {
     // const { id: taskId } = req.params;
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body);
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     res.status(200).json({
       status: "UPDATED",
       task: task,
