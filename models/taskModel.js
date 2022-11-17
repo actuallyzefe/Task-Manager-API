@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const TaskSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Bir isim girmelisin"],
+    required: [true, "MUST ENTER NAME"],
   },
   completed: {
     type: Boolean,
